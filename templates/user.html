@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+
+{% block main_contents %}
+  <li>{{jplayer.name}}</li>
+  <br>
+  {% for m in jmatches %}
+    <li id="gameInfo{{loop.index}}"></li>
+    <script language="javascript">
+      game_mode = {{[m.game_mode] | tojson | safe}}[0];
+      switch(game_mode)
+      {
+        case "solo":
+          game_mode = "솔로";
+          break;
+        case "duo":
+          game_mode = "듀오";
+          break;
+        case "squad":
+          game_mode = "스쿼드";
+          break;
+        default:
+          game_mode = "알수없음";
+          break;
+      }
+      map_name = {{[m.map_name] | tojson | safe}}[0];
+      switch(map_name)
+      {
+        case "Desert_Main":
+          map_name = "미라마";
+          break;
+        case "DihorOtok_Main":
+          map_name = "비켄디";
+          break;
+        case "Erangel_Main":
+          map_name = "에란겔";
+          break;
+        case "Baltic_Main":
+          map_name = "에란겔 리마스터";
+          break;
+        case "Range_Main":
+          map_name = "훈련장";
+          break;
+        case "Savage_Main":
+          map_name = "사녹";
+          break;
+        default:
+          map_name = "알수없음"
+          break;
+      }
+      document.getElementById("gameInfo{{loop.index}}").innerHTML = game_mode + " #{{jrosters[loop.index0][0].win_place}}/{{jrosters | length}} " + map_name;
+    </script>
+    <table class="table">
+      <thead>
+        <th scope="col"></th>
+        <th scope="col">Kill</th>
+        <th scope="col">Damage</th>
+        <th scope="col">Distance</th>
+      </thead>
+      <tbody>
+        {% set mloop = loop %}
+        {% for p in jrosters[loop.index0] %}
+        <tr>
+          <td id="name{{mloop.index}}p{{loop.index}}"><\td>
+          <td id="kill{{mloop.index}}p{{loop.index}}"><\td>
+          <td id="damage{{mloop.index}}p{{loop.index}}"><\td>
+          <td id="distance{{mloop.index}}p{{loop.index}}"><\td>
+          <script language="javascript">
+            jsonified = {{[p.name, p.kills, p.damage_dealt, p.walk_distance, p.ride_distance] | tojson | safe}};
+            document.getElementById("name{{mloop.index}}p{{loop.index}}").innerHTML = jsonified[0];
+            document.getElementById("kill{{mloop.index}}p{{loop.index}}").innerHTML = jsonified[1];
+            document.getElementById("damage{{mloop.index}}p{{loop.index}}").innerHTML = Math.round(jsonified[2]);
+            document.getElementById("distance{{mloop.index}}p{{loop.index}}").innerHTML = Math.round((jsonified[3] + jsonified[4]) / 10) / 100
+          </script>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br>
+  {% endfor %}
+{% endblock %}
