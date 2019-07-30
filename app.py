@@ -52,6 +52,7 @@ def search_user(username):
         player = make_dummy_player()
         matches = []
         rosters = []
+        player_index = []
     return render_template("user.html",
                            jplayer=player,
                            jmatches=matches,

@@ -69,7 +69,7 @@
             document.getElementById("name{{mloop.index}}p{{loop.index}}").innerHTML = jsonified[0];
             document.getElementById("kill{{mloop.index}}p{{loop.index}}").innerHTML = jsonified[1];
             document.getElementById("damage{{mloop.index}}p{{loop.index}}").innerHTML = Math.round(jsonified[2]);
-            document.getElementById("distance{{mloop.index}}p{{loop.index}}").innerHTML = Math.round((jsonified[3] + jsonified[4]) / 10) / 100
+            document.getElementById("distance{{mloop.index}}p{{loop.index}}").innerHTML = Math.round((jsonified[3] + jsonified[4]) / 10) / 100 + "km"
           </script>
         </tr>
         {% endfor %}
